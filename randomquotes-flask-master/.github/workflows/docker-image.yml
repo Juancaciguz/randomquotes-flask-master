@@ -21,8 +21,6 @@ jobs:
       run: |
         docker login -u $DOCKER_USER -p $DOCKER_PASS
     - name: Build the Docker image
-      run: docker build randomquotes-flask-master --file randomquotes-flask-master/Dockerfile --tag juancaciguz/express-randomquotes:latest
-      
+      run: docker build . --file Dockerfile --tag juancaciguz/express-randomquotes:latest
     - name: Docker Push
       run: docker push juancaciguz/express-randomquotes
-
