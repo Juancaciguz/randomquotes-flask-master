@@ -1,21 +1,31 @@
-name: Docker Image CI 
-on: 
-  push: 
-    branches: [ main ] 
-  pull_request: 
-    branches: [ main ] 
-jobs: 
-  build: 
-    runs-on: ubuntu-latest 
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
     steps:
-    - uses: actions/checkout@v4 
-    - name: docker login 
-      env: 
-        DOCKER_USER: ${{secrets.DOCKERHUB_USER}} 
-        DOCKER_PASS: ${{secrets.DOCKERHUB_PASS}} 
-      run: | 
-        docker login -u $DOCKER_USER -p $DOCKER_PASS 
-    - name: Build the Docker image 
-      run: docker build . --file Dockerfile --tag juancaciguz/express-randomquotes:latest 
-    - name: Docker Push 
-      run: docker push juancaciguz/express-randomquotes 
+    - uses: actions/checkout@v4
+
+    - name: docker login
+      env:
+        DOCKER_USER: ${{secrets.DOCKERHUB_USER}}
+        DOCKER_PASS: ${{secrets.DOCKERHUB_PASS}}
+      run: |
+        docker login -u $DOCKER_USER -p $DOCKER_PASS
+
+    - name: List all files recursively
+      run: ls -lR
+
+    - name: Build the Docker image
+      run: docker build . --file Dockerfile --tag juancaciguz/express-randomquotes:latest
+      working-directory: randomquotes-flask-master
+
+    - name: Docker Push
+      run: docker push juancaciguz/express-randomquotes
