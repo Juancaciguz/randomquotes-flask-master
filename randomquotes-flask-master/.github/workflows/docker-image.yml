@@ -18,6 +18,9 @@ jobs:
         DOCKER_PASS: ${{secrets.DOCKERHUB_PASS}}
       run: |
         docker login -u $DOCKER_USER -p $DOCKER_PASS
+    - name: List files for debug
+      run: ls -l
+      working-directory: randomquotes-flask-master
     - name: Build the Docker image
       run: docker build . --file Dockerfile --tag juancaciguz/express-randomquotes:latest
       working-directory: randomquotes-flask-master
